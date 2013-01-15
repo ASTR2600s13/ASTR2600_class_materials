@@ -14,8 +14,8 @@ for ii=0,npts do begin
     color = color + ii
     plot,newx,sin(newx),yrange=[-1,1],xrange=[0,4*!pi],/nodata
     oplot,newx,sin(newx),color=color,thick=6
-    tvcircle,10.2,newx[-3],sin(newx[-1])+0.03,color,/fill
-    tvcircle,10.075,newx[-1]+0.05,sin(newx[-1])+0.04,0,/fill
+    tvcircle,.2,newx[-3],sin(newx[-1])+0.03,color,/fill,/data
+    tvcircle,.075,newx[-1]+0.05,sin(newx[-1])+0.04,0,/fill,/data
     wait,2/float(npts)
 endfor
 end
