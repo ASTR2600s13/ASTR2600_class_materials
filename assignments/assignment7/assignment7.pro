@@ -13,6 +13,8 @@
 ; functions.  You need to add comments indicating what the error was.
 ;
 ; This is debugging.  Good luck!
+;
+; Remember to include the time spent on this in your commit message
 
 
 ; function to square a value

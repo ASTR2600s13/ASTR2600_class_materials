@@ -12,6 +12,8 @@ and false otherwise.
 the 'assert' statement does nothing if it's given True and crashes otherwise:
     assert True # does nothing
     assert False # crashes
+
+Remember to include the time spent on this in your commit message
 """
 import numpy as np
 
