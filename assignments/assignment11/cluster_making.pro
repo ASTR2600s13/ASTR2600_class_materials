@@ -30,6 +30,20 @@ function q_cluster, p, r0=r0, alpha=alpha
     return, r1*(r1 gt r0)+r2*(r2 le r0)
 end
 
+; make a "radius" into random x,y,z directions
+; (you don't need to use this yourself, but you might find it useful)
+function rand_xyz,r,seed=seed
+    rsize = n_elements(r)
+    randx = randomu(seed,rsize)*2-1
+    randy = randomu(seed,rsize)*2-1
+    randz = randomu(seed,rsize)*2-1
+    normal = (randx^2+randy^2+randz^2)^0.5
+    randx = randx/normal * r
+    randy = randy/normal * r
+    randz = randz/normal * r
+    return,[[randx],[randy],[randz]]
+end
+
 ; some test code (go ahead and try this if you want to see what the functions look like)
 pro test_cluster_making
     r = 10^(findgen(100)/99.*3 - 2)
@@ -53,24 +67,19 @@ end
 ;
 ; The return value is an array of shape [nstars,3], so you could do:
 ;
-; xyz = random_xyz(100,2)
+; xyz = random_xyz(100,2) * !units.pc
 ; x = xyz[*,0]
 ; y = xyz[*,1]
 ; z = xyz[*,2]
+;
+; (don't forget to convert units appropriately)
 function random_xyz,nstars,alpha,r0=r0,seed=seed
 
     cluster_r = q_cluster(randomu(seed,nstars),alpha=alpha,r0=r0)
-    ; phi
-    cluster_p = randomu(seed,nstars)*2*!dpi
-    ; theta
-    cluster_t = randomu(seed,nstars)*!dpi-!dpi/2.
 
-    ;spherical coordinate conversion
-    clusterx = sin(cluster_t) * cos(cluster_p) * cluster_r
-    clustery = sin(cluster_t) * sin(cluster_p) * cluster_r
-    clusterz = cos(cluster_t) * cluster_r
+    cluster_xyz = rand_xyz(cluster_r,seed)
     
-    return, [[clusterx],[clustery],[clusterz]]
+    return, cluster_xyz
 end
 
 pro test_randomxyz
@@ -117,19 +126,13 @@ end
 ; Once you've computed your star speeds, convert them into star
 ; velocities (so randomize the direction) using this function
 ;
-; vxvyvz = star_velocities(star_speeds)
+; vxvyvz = star_velocities(speeds)
 ; vx = vxvyvz[*,0]
 ; vy = vxvyvz[*,1]
 ; vz = vxvyvz[*,2]
-function star_velocities,star_speeds,seed=seed
+function star_velocities,speeds,seed=seed
 
-    nstars = n_elements(star_velocities)
-    phi = randomu(seed,nstars) * 2 * !dpi
-    theta = randomu(seed,nstars) * !dpi - !dpi/2.
-    vx = cos(phi) * sin(theta) * star_velocities
-    vy = sin(phi) * sin(theta) * star_velocities
-    vz = cos(theta) * star_velocities
+    vxyz = rand_xyz(speeds,seed)
 
-    return,[[vx],[vy],[vz]]
+    return,vxyz
 end
-
