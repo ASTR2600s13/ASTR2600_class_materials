@@ -87,7 +87,7 @@ end
 ; which isn't possible in real life).
 ;
 ; The returned masses are in units of SOLAR MASSES.  You need to convert them to
-; grams to use, e.g.:
+; kilograms to use, e.g.:
 ;
 ; star_masses = random_masses(100) * !units.msun
 function random_masses,nstars,seed=seed
