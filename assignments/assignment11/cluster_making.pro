@@ -77,7 +77,7 @@ function random_xyz,nstars,alpha,r0=r0,seed=seed
 
     cluster_r = q_cluster(randomu(seed,nstars),alpha=alpha,r0=r0)
 
-    cluster_xyz = rand_xyz(cluster_r,seed)
+    cluster_xyz = rand_xyz(cluster_r,seed=seed)
     
     return, cluster_xyz
 end
@@ -132,7 +132,7 @@ end
 ; vz = vxvyvz[*,2]
 function star_velocities,speeds,seed=seed
 
-    vxyz = rand_xyz(speeds,seed)
+    vxyz = rand_xyz(speeds,seed=seed)
 
     return,vxyz
 end
