@@ -16,9 +16,10 @@ end
 
 ; car.drive,distance
 
-pro CarClass::init,gas,location
+function CarClass::init,gas,location
     self.gas = gas
     self.location = location
+    return,1
 end
 
 pro CarClass::set_location,loc
