@@ -14,11 +14,14 @@ pro CarClass::drive, distance
     endif
 end
 
+; how-to:
 ; car.drive,distance
 
 function CarClass::init,gas,location
-    self.gas = gas
-    self.location = location
+    ; initialize the clas with optional gas,location
+    ; parameters
+    if n_elements(gas) gt 0 then self.gas = gas
+    if n_elements(location) gt 0 then self.location = location
     return,1
 end
 
